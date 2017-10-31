@@ -5,20 +5,20 @@ import service.Baby;
 import service.Gift;
 
 public class BabyRegister {
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) throws ParseException {	
         ArrayList<Baby> babys=new ArrayList();
         SimpleDateFormat dateFormat= new SimpleDateFormat("dd/MM/yyyy");
         ArrayList<Baby> babysCpy=new ArrayList();
-        babys.add(new Baby("10/02/2002","Paolo",'m'));
-        babys.add(new Baby("28/10/2001","ZZ",'m'));
-        Gift e= new Gift();
-        babys.get(0).gift.add(e);
+        babys.add(new Baby("10/02/2002","Paolo",'M'));
+        babys.add(new Baby("28/10/2001","Zeno",'M'));
+        Gift g1= new Gift();
+        babys.get(0).gift.add(g1);		//give to Paolo an empty gift
         for(Baby b:babys){
             System.out.println(b);
         }
         while(true){
             Scanner keyboard = new Scanner(System.in);
-            String birthday;
+            Date birthday=new Date();
             String name;
             Character gender; 
             System.out.println("What do you want to do? (type the number of choise)");
@@ -35,12 +35,34 @@ public class BabyRegister {
                 switch(choise){
                     case 1:
                         System.out.println("Type the birthday like that '01/01/2001' ");
-                        birthday=keyboard.next();
+                        
+						boolean validDate = false;
+						while(!validDate){
+							try{
+								birthday = dateFormat.parse(keyboard.next());
+								validDate = true;
+							}catch(ParseException e){
+								System.out.println("Invalid date, type it again");
+								validDate = false;
+							}
+						}
                         System.out.println("Type the name ");
                         name=keyboard.next();
                         
-                        System.out.println("Type the gender (m/f)");            
-                        gender= keyboard.next().charAt(0);
+                        
+						while(true){
+							System.out.println("Type the gender (M/F)");
+							String input=keyboard.next();
+							if(input.length()==1){
+								if (input.equalsIgnoreCase("m") || input.equalsIgnoreCase("f")){
+									
+
+									gender= Character.toUpperCase(input.charAt(0));
+									break;
+								}
+							}
+						}
+                        
                         
                         
                         babys.add(new Baby(birthday,name,gender));
@@ -95,19 +117,36 @@ public class BabyRegister {
                             if (b.getName().equals(nameOfBaby) && birthdayOfBaby.equals(b.getBirthday())){
                                 Gift g;
                                 System.out.println("Do you want to describe your gift? (yes/no)...");
-                                String yesOrNo=keyboard.next();
-                                if(yesOrNo.equals("yes")){
+								String yesOrNo=new String();
+                                while (true){
+									yesOrNo=keyboard.next();
+									if (yesOrNo.equalsIgnoreCase("yes") || yesOrNo.equalsIgnoreCase("no")) break;
+									System.out.println("write just yes or no... ");
+								}
+								
+                                if(yesOrNo.equalsIgnoreCase("yes")){
                                 System.out.println("Insert your name :");
                                 String donator=keyboard.next();
                                 System.out.println("Insert a description for the gift :");
                                 keyboard.nextLine();
                                 String description=keyboard.nextLine();
                                 System.out.println("Insert the date of the gift:");
-                                String d=keyboard.next();
-                                Date date=dateFormat.parse(d);
+								
+								validDate = false;
+								Date date= new Date();
+								while(!validDate){
+									try{
+										date = dateFormat.parse(keyboard.next());
+										validDate = true;
+									}catch(ParseException e){
+										System.out.println("Invalid date, type it again");
+										validDate = false;
+									}
+								}
+                                
                                 g = new Gift(donator, description, date);
                                 }
-                                else 
+                                else
                                     g = new Gift(); 
                                 b.gift.add(g);
                             }
