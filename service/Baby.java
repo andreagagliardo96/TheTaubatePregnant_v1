@@ -7,27 +7,27 @@ import java.util.Date;
 public class Baby {
     //date or bithday format: yyyy/mm/dd
     SimpleDateFormat dateFormat= new SimpleDateFormat("dd/MM/yyyy");
-    public ArrayList<Gift> gift;
+    public ArrayList<Gift> gift = new ArrayList();
     private String name;
     private Date birthday;
     private char gender;
     public Date today=new Date(); //today's date
     
     public Baby(){
-        this.gift = new ArrayList();
+        //this.gift = new ArrayList();
         this.name=null;
         this.birthday=null;
         this.gender='\0';
     }
     public Baby(String birthday, String name, char gender) throws ParseException {
-        this.gift = new ArrayList();
+        //this.gift = new ArrayList();
         this.name = name;
         this.gender = gender;
         this.birthday = dateFormat.parse(birthday);
     }
     
     public Baby(Date birthday, String name, char gender){
-        this.gift = new ArrayList();
+        //this.gift = new ArrayList();
         this.name=name;
         this.birthday=birthday;
         this.gender=gender;

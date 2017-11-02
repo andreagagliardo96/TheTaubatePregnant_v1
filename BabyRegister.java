@@ -6,9 +6,11 @@ import service.Gift;
 
 public class BabyRegister {
     public static void main(String[] args) throws ParseException {	
-        ArrayList<Baby> babys=new ArrayList();
+		ArrayList<Baby> babysSorted = new ArrayList();
+		ArrayList<Baby> babysSortedByAge = new ArrayList();
+        ArrayList<Baby> babys = new ArrayList();
         SimpleDateFormat dateFormat= new SimpleDateFormat("dd/MM/yyyy");
-        ArrayList<Baby> babysCpy=new ArrayList();
+        ArrayList<Baby> babysCpy = new ArrayList();
         babys.add(new Baby("10/02/2002","Paolo",'M'));
         babys.add(new Baby("28/10/2001","Zeno",'M'));
         Gift g1= new Gift();
@@ -18,13 +20,13 @@ public class BabyRegister {
         }
         while(true){
             Scanner keyboard = new Scanner(System.in);
-            Date birthday=new Date();
+            Date birthday = new Date();
             String name;
             Character gender; 
             System.out.println("What do you want to do? (type the number of choise)");
             System.out.println("1)Add new baby");
-            System.out.println("2)List Babies by age");
-            System.out.println("3)List Babies by name");
+            System.out.println("2)List Babies by name");
+            System.out.println("3)List Babies by age");
             System.out.println("4)Add gift");
             System.out.println("5)List gift ");
             System.out.println("0)Exit ");
@@ -33,7 +35,9 @@ public class BabyRegister {
             else if(choise<0 || choise >5) System.out.println("Error, chose writing a number between 0 and 5");
             else{
                 switch(choise){
+					
                     case 1:
+					
                         System.out.println("Type the birthday like that '01/01/2001' ");
                         
 						boolean validDate = false;
@@ -67,46 +71,46 @@ public class BabyRegister {
                         
                         babys.add(new Baby(birthday,name,gender));
                         break;
+					//MIGLIORARE QUI
                     case 2:
-                        ArrayList<Baby> babysSorted=new ArrayList();
                        
                         for(Baby b:babys)
-                            babysCpy.add(b);
-                        int i=0;
+                            babysCpy.add(b);	//copio la lista
                         int j=babysCpy.size();
                         Baby bb;
-                        while (i!=j){
-                            bb=babysCpy.get(0);
+                        while (j>0){
+                            bb=babysCpy.get(j-1);
                             for(Baby b:babysCpy){
-                                if(bb.getName().compareTo(b.getName())>0) bb=b;
+                                if(bb.getName().compareToIgnoreCase(b.getName())>0) bb=b;
                             }
                         System.out.println(bb);
                         babysSorted.add(bb);
                         babysCpy.remove(bb);
-                        i++;
+                        j--;
                         
                         }
                         
                         break;
                     
                     case 3:
-                        ArrayList<Baby> babysSortedByAge=new ArrayList();
+                        
                         for(Baby b:babys)
                             babysCpy.add(b);
-                        i=0;
+                        
                         j=babys.size();
-                        while (i!=j){
-                            bb=babysCpy.get(0);
+                        while (j>0){
+                            bb=babysCpy.get(j-1);
                             for(Baby b:babysCpy){
                                 if(!bb.isOlder(b)) bb=b;
                             }
                         System.out.println(bb);
                         babysSortedByAge.add(bb);
                         babysCpy.remove(bb);
-                        i++;
+                        j--;
                         }
                         break;
                     case 4:
+					
                         System.out.println("Do you want to gift this present to which baby?");
                         System.out.println("Insert name:");
                         String nameOfBaby=keyboard.next();
@@ -117,7 +121,7 @@ public class BabyRegister {
                             if (b.getName().equals(nameOfBaby) && birthdayOfBaby.equals(b.getBirthday())){
                                 Gift g;
                                 System.out.println("Do you want to describe your gift? (yes/no)...");
-								String yesOrNo=new String();
+								String yesOrNo = new String();
                                 while (true){
 									yesOrNo=keyboard.next();
 									if (yesOrNo.equalsIgnoreCase("yes") || yesOrNo.equalsIgnoreCase("no")) break;
@@ -133,7 +137,7 @@ public class BabyRegister {
                                 System.out.println("Insert the date of the gift:");
 								
 								validDate = false;
-								Date date= new Date();
+								Date date = new Date();
 								while(!validDate){
 									try{
 										date = dateFormat.parse(keyboard.next());
@@ -154,6 +158,7 @@ public class BabyRegister {
                         }
                         break;
                     case 5:
+					
                         System.out.println("choise:5");
                         System.out.println("Insert name:");
                         nameOfBaby=keyboard.next();
